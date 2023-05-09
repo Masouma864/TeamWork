@@ -47,3 +47,32 @@ $(document).ready(function () {
         }
     });
 });
+
+//validate form
+
+const form = document.getElementById('form');
+const message = document.querySelector('.error-mesg');
+const subject = document.getElementById('subject');
+const email = document.getElementById('email');
+const textMessage = document.getElementById('message');
+
+function saveData() {
+  const obj = {
+    subject: subject.value,
+    email: email.value,
+    message: textMessage.value,
+  };
+  localStorage.setItem('data', JSON.stringify(obj));
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (/^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$/g.test(email.value) && subject.value !== "" && textMessage.value !== "") {
+    form.submit();
+    form.reset();
+    saveData();
+  } else {
+    message.innerText = 'Please enter valid input in all fields';
+    message.style.display = "block";
+  }
+});
